@@ -42,11 +42,10 @@ library ieee;
   use ieee.std_logic_1164.all;
   use ieee.numeric_std.all;
 
-
 entity top_basys3 is
 	port(
 		-- Switches
-		sw		:	in  std_logic_vector(15 downto 0);
+		sw		:	in  std_logic_vector(8 downto 0);
 		
 		-- LEDs
 		led	    :	out	std_logic_vector(15 downto 0)
@@ -56,12 +55,28 @@ end top_basys3;
 architecture top_basys3_arch of top_basys3 is 
 	
     -- declare the component of your top-level design
+    component ripple_adder is -- declare the component
+        port (
+            A : in STD_LOGIC_VECTOR(3 downto 0);
+            B : in STD_LOGIC_VECTOR(3 downto 0);
+            Cin  : in STD_LOGIC;
+            S    : out STD_LOGIC_VECTOR(3 downto 0);
+            Cout : out std_logic
+        );
+    end component ripple_adder;            
 
-    -- declare any signals you will need	
-  
+    -- declare any signals you will need
+    signal w_carry  : STD_LOGIC_VECTOR(3 downto 0); -- for ripple between adders
+    	 
 begin
-	-- PORT MAPS --------------------
-   
+	U1: ripple_adder 
+    port map(
+        A    => sw(4 downto 1),  -- Connect switches to A
+        B    => sw(8 downto 5),  -- Connect switches to B
+        Cin  => sw(0),           -- Connect Cin to a switch
+        S    => LED(3 downto 0), -- Show sum on LEDs
+        Cout => LED(15)           -- Show carry-out on an LED
+    );
 	---------------------------------
 	
 	-- CONCURRENT STATEMENTS --------
