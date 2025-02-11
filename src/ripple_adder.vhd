@@ -10,7 +10,7 @@ entity ripple_adder is
            B : in STD_LOGIC_VECTOR (3 downto 0);
            Cin : in STD_LOGIC;
            S : out STD_LOGIC_VECTOR (3 downto 0);
-           Cout : out STD_LOGIC);
+           Cout : out STD_LOGIC );
 end ripple_adder;
 
 architecture Behavioral of ripple_adder is
